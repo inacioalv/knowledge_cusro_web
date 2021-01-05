@@ -64,7 +64,7 @@ export default {
             const url = `${baseApiUrl}/categories/paginas/pagina?page=${this.page}`
             axios.get(url).then(res => {
                 //this.categories = res.data.data
-                this.categories = res.data.data.map(category => {//Selecionar no comobox
+                this.categories = res.data.data.map(category => {//Selecionar no combobox  
                     return { ...category, value: category.id, text: category.path }
                 })
                 this.limit= res.data.limit
