@@ -11,6 +11,10 @@ module.exports = app => {
       .post(admin(app.api.user.save))  // com  consign ira fazer a buscar do script em user  
       .get(admin(app.api.user.get))
 
+      //Paginação user
+   app.route('/users/paginas/pagina')
+      .all(app.config.passport.authenticate())
+      .get(admin(app.api.user.getByPage))
 
    app.route('/users/:id')
       .all(app.config.passport.authenticate())    // todos o metodos irar passar por esse filtro antes, Authorization
@@ -22,6 +26,7 @@ module.exports = app => {
       .all(app.config.passport.authenticate())          // todos o metodos irar passar por esse filtro antes
       .get(admin(app.api.category.get))
       .post(admin(app.api.category.save))
+      .get(app.api.category.getPage)
 
    //Cuidado com ordem! Tem que vir antes de /categories/:id
    app.route('/categories/tree')
@@ -34,7 +39,12 @@ module.exports = app => {
       .put(admin(app.api.category.save))
       .delete(admin(app.api.category.remove))
 
+      //Paginação
+   app.route('/categories/paginas/pagina')
+      .all(app.config.passport.authenticate())   // todos o metodos irar passar por esse filtro antes
+      .get(app.api.category.getPage)
 
+  
    app.route('/articles')
       .all(app.config.passport.authenticate())   // todos o metodos irar passar por esse filtro antes
       .get(admin(app.api.article.get))

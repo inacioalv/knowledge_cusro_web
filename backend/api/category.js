@@ -119,5 +119,19 @@ module.exports = app => {
             .catch(err => res.status(500).send(err))
     }
 
-    return { save, remove, get, getById, getTree }
+    const limit =3 // usado para paginação
+    const getPage = async (req,res) =>{//Buscar
+            const page = req.query.page || 1
+
+            const result = await app.db('categories').count('id').first()
+            const count = parseInt(result.count)
+
+            app.db('categories')
+                .select('id', 'name', 'parentId')
+                .limit(limit).offset(page * limit - limit)
+                .then(categories => res.json({ data: categories, count, limit }))
+                .catch(err => res.status(500).send(err))
+    }
+
+    return { save, remove, get, getById, getTree,getPage }
 }

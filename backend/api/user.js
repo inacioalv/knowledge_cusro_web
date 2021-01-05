@@ -85,5 +85,19 @@ module.exports = app =>{
             }
         }
 
-    return {save,get,getById,remove}
+    const limit =3 // usado para paginação
+    const getByPage = async (req,res) =>{//Buscar
+            const page = req.query.page || 1
+
+            const result = await app.db('users').count('id').first()
+            const count = parseInt(result.count)
+
+            app.db('users')
+                .select('id', 'name', 'email','admin')
+                .limit(limit).offset(page * limit - limit)
+                .then(user => res.json({ data: user, count, limit }))
+                .catch(err => res.status(500).send(err))
+    }
+
+    return {save,get,getById,remove,getByPage}
 }
