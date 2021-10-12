@@ -61,7 +61,7 @@ module.exports = app => {
         const getParent = (categories, parentId) => {
             // vincular com a categoria
             const parent = categories.filter(parent => parent.id === parentId)
-            // se tamanho maior que zerro retorna verdadeiro e colocar com index zerro, se não retorna null
+            // se tamanho maior que zero retorna verdadeiro e colocar com index zero, se não retorna null
             return parent.length ? parent[0] : null
         }
 
